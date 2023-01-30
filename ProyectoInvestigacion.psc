@@ -328,35 +328,39 @@ FinFuncion
 
 // 5. Indicar cuantas ,.;: hay en una cadena
 Funcion CuantosPuntosCadenas()
-	Definir n,p,c,d,pc,x Como Entero
-	Definir Frase Como Caracter
-	Escribir "Ingresa una frase"
-	leer frase
-	n = Longitud(frase)
-	x = 0 
-	p = 0
-	c = 0
-	d = 0
-	pc = 0
-	
-	Mientras x <= n Hacer
-		segun Subcadena(frase,x,x) hacer
-			".":
+		Definir n,p,cm,d,pc,pos Como Entero
+		Definir frase Como Caracter
+		Escribir "Ingresa una frase"
+		leer frase
+		n = Longitud(frase)
+		p = 0
+		cm =0
+		d = 0
+		pc = 0
+		pos=0
+		
+		Para pos<-0 Hasta n Con Paso 1 Hacer
+			Si Subcadena(frase,pos,pos)="." Entonces
 				p = p + 1
-			","o ",,":
-				c = c + 1
-			":":
-				d = d + 1
-			";":
-				pc = pc + 1
-		FinSegun
-		x = x + 1
-	FinMientras
-	Escribir "La frase",frase," tiene"
-	Escribir "puntos(.) :", p
-	Escribir "comas(,) :", c
-	Escribir "dos puntos(:) :", d
-	Escribir "punto y coma(;) :", pc
+			SiNo
+				Si Subcadena(frase,pos,pos)="," Entonces
+					cm = cm + 1
+				SiNo
+					Si Subcadena(frase,pos,pos)=":" Entonces
+						d = d + 1
+					SiNo
+						Si Subcadena(frase,pos,pos)=";" Entonces
+							pc = pc + 1
+						FinSi
+					FinSi
+				FinSi
+			FinSi
+		Fin Para
+		Escribir "La frase ",frase," tiene"
+		Escribir "puntos(.) :", p
+		Escribir "comas(,) :",cm
+		Escribir "dos puntos(:) :", d
+		Escribir "punto y coma(;) :", pc
 FinFuncion
 
 
@@ -375,6 +379,7 @@ Funcion VocalesConsonantesDigitosHay()
     voca=0
     x=0
     c=0
+	dig=0
     Mientras x <= n  Hacer
         Segun Subcadena(frase,x,x)  Hacer
 			
@@ -484,7 +489,21 @@ FinFuncion
 
 // 10. Presenta la posicion de un caracter cualquiera dentro de una cadena
 Funcion PosicionCaracterDEntroCadena()
-	
+	//Escribir la frase en minuscula
+    definir frase,carter, RESULT Como Caracter
+    definir i,c Como Entero
+    i=0
+    Escribir "Ingrese una frase"
+    leer frase
+    Escribir "Ingrese el caracter que le gustaria buscar"
+    leer carter
+    c=Longitud(frase)
+    Para i=0 Hasta c con paso 1 Hacer 
+        result=Subcadena(frase,i,i)
+        Si carter = result Entonces
+            Mostrar "Ese caracter estan en la posicion... ",i
+        FinSi
+    FinPara
 FinFuncion
 
 
@@ -562,28 +581,20 @@ FinFuncion
 
 // 4. Dado un arreglo de nombres presentar el primer caracter de cada nombre
 Funcion PresentarPrimerCaracterDENombre()
-	Definir palabra,cadena,letras,usuario Como Caracter
-    Definir k,i,j Como Entero
-    Escribir "digite una palabra"
-    Leer palabra
-    k = Longitud(palabra)
-    Escribir "el numero de caracteres de la palabra ",palabra," es ",k
-    cadena=Subcadena(palabra,1,4)
-    Escribir cadena
-    Dimension letras(k)
-    Para i=0 Hasta k-1 Con Paso 1 Hacer
-        letras[i]=Subcadena(palabra,i,i)
+	Definir cantidad, i Como Entero;
+    Definir nom, x, primera Como Caracter;
+    Escribir "Ingresar la cantidad de arreglos";
+    Leer cantidad;
+    Dimension x[cantidad];
+    Para i <- 0 Hasta cantidad-1 Con Paso 1 Hacer
+        Escribir "Ingresar nombre";
+        leer nom;
+        x[i] = nom;
     Fin Para
-    Para j=0 Hasta k-1 Con Paso 1 Hacer
-        Escribir j,". ",letras[j]
+    Para i <- 0 Hasta cantidad-1 Con Paso 1 Hacer
+        primera= Subcadena(x[i],0,0);
+        Escribir "La inicial de cada nombre ingresado es: ", primera;
     Fin Para
-    usuario=""
-    usuario=Subcadena(palabra,0,0)
-    Escribir usuario
-    usuario=Subcadena(palabra,4,4)
-    Escribir usuario
-    usuario=Subcadena(palabra,9,9)
-    Escribir usuario
 FinFuncion
 
 
@@ -669,8 +680,8 @@ FinFuncion
 
 
 
-// 9. Dado una serie de numeros guarda en un arreglo los factoriales
-Funcion GuardaNumerosEnArregloFactorial()
+// 9. Dado 2 arreglos copiar en un otroarreglo la suma de cada elemento de los 2 arreglos
+Funcion DosArreglosCopiarOtroArreglo() 
 	Definir arreglo1,arreglo2,arreglo3,pos,lon,num Como Entero
 	Dimension arreglo1[10] ,arreglo2[10], arreglo3[10]
 	lon=0;pos=0
@@ -692,8 +703,8 @@ Funcion GuardaNumerosEnArregloFactorial()
 FinFuncion
 
 
-// 10. Dado 2 arreglos copiar en un otroarreglo la suma de cada elemento de los 2 arreglos
-Funcion DosArreglosCopiarOtroArreglo()
+// 10. Dado una serie de numeros guarda en un arreglo los factoriales
+Funcion GuardaNumerosEnArregloFactorial()
 	Definir arreglo1,arreglo2,pos,lon,x,n,factorial Como Entero
 	lon=0;pos=0;x=1
 	Dimension arreglo1[10] ,arreglo2[10]
@@ -776,8 +787,8 @@ Algoritmo Proyecto
     menuArreglos[5]= "6)Dado un arreglo presentarlo al revez solo los numeros multiplos de 5"
     menuArreglos[6]= "7)Dado un arreglo presentar el primero,el medio y el ultimo elemento del arreglo"
     menuArreglos[7]= "8)Dado un arreglo copiarlo en otro y presentarlo"
-	menuArreglos[8]= "9)Dado una serie de numeros guarda en un arreglo los factoriales"
-    menuArreglos[9]= "10)Dado 2 arreglos copiar en un otroarreglo la suma de cada elemento de los 2 arreglos"
+	menuArreglos[8]= "9)Dado 2 arreglos copiar en un otroarreglo la suma de cada elemento de los 2 arreglos"
+    menuArreglos[9]= "10)Dado una serie de numeros guarda en un arreglo los factoriales"
 	menuArreglos[10]="11) Salir"
 	opc=""
     Mientras opc <> "4" Hacer
@@ -928,12 +939,12 @@ Algoritmo Proyecto
 						CopiarUnArregloEnOtro()
 						Esperar 3 Segundos
 					"9":
-						Escribir "Dado una serie de numeros guarda en un arreglo los factoriales"
-						GuardaNumerosEnArregloFactorial()
+						Escribir "Dado 2 arreglos copiar en un otroarreglo la suma de cada elemento de los 2 arreglos"
+						DosArreglosCopiarOtroArreglo() 
 						Esperar 3 Segundos
 					"10":
-						Escribir "Dado 2 arreglos copiar en un otroarreglo la suma de cada elemento de los 2 arreglos"
-						DosArreglosCopiarOtroArreglo()
+						Escribir "Dado una serie de numeros guarda en un arreglo los factoriales"
+						GuardaNumerosEnArregloFactorial()
 						Esperar 3 Segundos
 					"11":
 						Escribir "Regresando al Menu Principal"
